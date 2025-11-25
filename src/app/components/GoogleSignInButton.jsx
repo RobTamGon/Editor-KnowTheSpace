@@ -3,7 +3,7 @@
 import { signIn, signOut, useSession } from "next-auth/react"
 
 export default function GoogleSignInButton() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession() ?? {};
 
   if (status === "loading") {
     return <p>Verificando sesión...</p>
