@@ -226,10 +226,16 @@ function DataReducer(Data, Action) {
 	}
 }
 
+
+
 // Main component
 export default function Editor() {
 	const [_Dimensions, _DimensionsDispatch] = useReducer(DimensionsReducer, InitialDimensions);
 	const [_Data, _DataDispatch] = useReducer(DataReducer, InitialData);
+
+	const Style = {
+		backgroundColor: `var(--middleground)`
+	};
 
 
 	return (
@@ -238,11 +244,11 @@ export default function Editor() {
 			<DimensionsDispatchContext value={_DimensionsDispatch}>
 			<DataContext value={_Data}>
 			<DataDispatchContext value={_DataDispatch}>
-				<div className="grid grid-cols-8 grid-rows-1 h-screen">
-					<div className="col-span-5 px-64">
+				<div className="h-screen overflow-auto grid md:grid-cols-8 md:grid-rows-1">
+					<div className="md:col-span-5 md:ml-4">
 						<Layout />
 					</div>
-					<div className="col-span-3 px-16">
+					<div className="md:col-span-3 md:ml-4" style={Style}>
 						<Menu />
 					</div>
 				</div>
@@ -289,10 +295,10 @@ function Tile({ Data, Position }) {
 
 	const No_Tile_Style = {
 		backgroundColor: `#ff808040`
-	}
+	};
 	const No_Room_Style = {
 		backgroundColor: `#00000000`
-	}
+	};
 
 
 	function HandleClick() {
@@ -468,11 +474,14 @@ function Menu() {
 	return (
 		<>
 			<div className="flex justify-center items-center h-full">
-				<div className="grid grid-cols-1 grid-rows-2 gap-8 w-full">
+				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
+					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href="/">
+						Volver
+					</a>
 					<div>
 						<DimensionInputs />
 					</div>
-					<div className="grid grid-cols-1 grid-rows-2 gap-4">
+					<div className="grid md:grid-cols-1 md:grid-rows-2 gap-4 max-md:grid-cols-2 max-md:grid-rows-1">
 						<button className="py-4 border cursor-pointer">Login</button>
 						<DownloadButton />
 					</div>
@@ -526,13 +535,13 @@ function DimensionInputs() {
 	return (
 		<>
 			<div className="grid grid-cols-9 grid-rows-2 gap-1">
-				<p className="col-span-4">Ancho:</p>
+				<p className="col-span-4 md:col-span-4 text-center">Ancho:</p>
 				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 					<button onClick={DecreaseWidth} className="border cursor-pointer">-</button>
 					<p className="col-span-2 border">{_Dimensions[0]}</p>
 					<button onClick={IncreaseWidth} className="border cursor-pointer">+</button>
 				</div>
-				<p className="col-span-4">Alto:</p>
+				<p className="col-span-4 md:col-span-4 text-center">Alto:</p>
 				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 					<button onClick={DecreaseHeight} className="border cursor-pointer">-</button>
 					<p className="col-span-2 border">{_Dimensions[1]}</p>

@@ -2,19 +2,14 @@
 
 :root {
   --background: #80A0C0;
+  --middleground: #d8e0f0;
   --foreground: #201000;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #101010;
+    --middleground: #101420;
     --foreground: #8aaaca;
   }
 }
