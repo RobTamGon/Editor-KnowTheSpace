@@ -3,7 +3,7 @@
 
 import { useReducer, createContext, useContext } from "react";
 import ChatAssistant from "../components/chatassistant";
-
+import { useSession } from "next-auth/react";
 
 // Dimension size limits
 const Min_Dimension_Size = 1;
@@ -238,7 +238,6 @@ export default function Editor() {
 		backgroundColor: `var(--middleground)`
 	};
 
-
 	return (
 		<>
 			<DimensionsContext value={_Dimensions}>
@@ -249,7 +248,7 @@ export default function Editor() {
 					<div className="md:col-span-5 md:ml-4">
 						<Layout />
 					</div>
-					<div className="md:col-span-3 md:ml-4" style={Style}>
+					<div className="md:col-span-3 md:ml-4 shadow-lg z-50 backdrop-blur-md" style={Style}>
 						<Menu />
 					</div>
 				</div>
@@ -473,20 +472,34 @@ function Connection({ Data, Position, Orientation }) {
 
 // UI with all menus
 function Menu() {
+	
+	const { data: local_session } = useSession();
+	// console.log("SESSION:", local_session);
+
 	return (
 		<>
 			<div className="flex justify-center items-center h-full">
 				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
-					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href="/">
-						Volver
-					</a>
 					<div>
 						<DimensionInputs />
 					</div>
 					<div className="grid md:grid-cols-1 md:grid-rows-2 gap-4 max-md:grid-cols-2 max-md:grid-rows-1">
-						<button className="py-4 border cursor-pointer">Login</button>
+						{(local_session||null) && (
+						<button className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"> 
+						Subir nivel</button>
+						)}
+
 						<DownloadButton />
 					</div>
+					<a className="flex justify-center items-center px-4 py-2 rounded-xl font-semibold border border-[var(--foreground)]/30
+          				bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+          				hover:bg-[var(--foreground)] hover:text-[var(--background)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]
+          				transition-all duration-200 max-md:relative max-md:static max-md:mb-4 md:absolute md:top-4 md:right-4" href="/">
+						Volver
+					</a>
 				</div>
 			</div>
 		</>
@@ -536,18 +549,34 @@ function DimensionInputs() {
 
 	return (
 		<>
-			<div className="grid grid-cols-9 grid-rows-2 gap-1">
-				<p className="col-span-4 md:col-span-4 text-center">Ancho:</p>
-				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
-					<button onClick={DecreaseWidth} className="border cursor-pointer">-</button>
-					<p className="col-span-2 border">{_Dimensions[0]}</p>
-					<button onClick={IncreaseWidth} className="border cursor-pointer">+</button>
-				</div>
-				<p className="col-span-4 md:col-span-4 text-center">Alto:</p>
-				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
-					<button onClick={DecreaseHeight} className="border cursor-pointer">-</button>
-					<p className="col-span-2 border">{_Dimensions[1]}</p>
-					<button onClick={IncreaseHeight} className="border cursor-pointer">+</button>
+			<div className="col-span-6">
+				<div className="grid grid-cols-9 grid-rows-2 gap-1">
+					<p className="col-span-4 md:col-span-4 text-center">Ancho:</p>
+					<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
+						<button onClick={DecreaseWidth} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer">-</button>
+						<p className="col-span-2 py-4 font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] transition-all">{_Dimensions[0]}</p>
+						<button onClick={IncreaseWidth} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer">+</button>
+					</div>
+					<p className="col-span-4 md:col-span-4 text-center">Alto:</p>
+					<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
+						<button onClick={DecreaseHeight} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer">-</button>
+						<p className="col-span-2 py-4 font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] transition-all">{_Dimensions[1]}</p>
+						<button onClick={IncreaseHeight} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer">+</button>
+					</div>
 				</div>
 			</div>
 		</>
@@ -577,7 +606,11 @@ function DownloadButton() {
 
 	return (
 		<>
-			<button className="py-4 border cursor-pointer" onClick={HandleClick}>Descargar nivel</button>
+			<button className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+    					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+    					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+    					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"
+						onClick={HandleClick}>Descargar nivel</button>
 		</>
 	);
 }

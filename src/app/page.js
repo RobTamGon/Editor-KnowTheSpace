@@ -45,11 +45,11 @@ import { getUserFromCookie } from "../lib/getUser";
 import Home from "./home/page";
 
 export default function HomePage() {
-  const user = getUserFromCookie(); 
+  // const user = getUserFromCookie(); 
 
-  const NavBar_Style = {
-    backgroundColor: `var(--middleground)`
-  };
+  // const NavBar_Style = {
+  //   backgroundColor: `var(--middleground)`
+  // };
 
   return (
     <>

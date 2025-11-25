@@ -18,8 +18,16 @@ export default function LogoutButton() {
 
   return (
     // Botón con estilo de logout
-    <button onClick={handleLogout} className="flex text-center justify-center items-center px-6 w-full h-full translate-x-1/4 border-2">
-      Cerrar sesión
+    // <button onClick={handleLogout} className="flex text-center justify-center items-center px-6 w-full h-full translate-x-1/4 border-2">
+    //   Cerrar sesión
+    // </button>
+    <button
+      onClick={handleLogout}
+      className=" flex justify-center items-center px-4 py-2 rounded-xl border hover:bg-white/10 hover:shadow-[0px_6px_18px_rgba(0,0,0,0.25)] transition-all"
+      >
+        Cerrar sesión
     </button>
+
+
   );
 }

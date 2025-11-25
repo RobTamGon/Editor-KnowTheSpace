@@ -13,7 +13,7 @@ export default function GoogleSignInButton() {
     return (
       <button
         onClick={() => signIn("google")}
-        className="px-4 py-2 bg-blue-600 text-white rounded"
+        className="py-3 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-600/40"
       >
         Iniciar sesión con Google
       </button>
