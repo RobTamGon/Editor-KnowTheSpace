@@ -271,7 +271,7 @@ export default function Editor({ params }) {
 						<Layout />
 					</div>
 					<div className="md:col-span-3 md:ml-4" style={Style}>
-						<Menu />
+						<Menu lang={lang} />
 					</div>
 				</div>
 			</DataDispatchContext>
@@ -494,7 +494,7 @@ function Connection({ Data, Position, Orientation }) {
 
 
 // UI with all menus
-function Menu() {
+function Menu({ lang }) {
 	const _DictionaryContext = useContext(DictionaryContext);
 
 
@@ -502,7 +502,7 @@ function Menu() {
 		<>
 			<div className="flex justify-center items-center h-full">
 				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
-					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href="/">
+					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href={"/" + lang}>
 						{_DictionaryContext !== null ? _DictionaryContext.Editor.Back : "..."}
 					</a>
 					<div>
