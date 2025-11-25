@@ -2,55 +2,73 @@
 "use client";
 
 import { useState } from "react";
+import GoogleSignInButton from "../components/GoogleSignInButton";
 
+// Página de inicio de sesión
 export default function LoginPage() {
+  // Estados de formulario
   const [email, setEmail] = useState("");
-  const [password_hash, setPassword] = useState("");
-  const [username, setName] = useState("");
-  const [isRegister, setIsRegister] = useState(false);
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [register, setRegister] = useState(false);
   const [msg, setMsg] = useState("");
 
-  async function handleAuth(e) {
+  // Función para enviar el formulario
+  async function handleSubmit(e) {
     e.preventDefault();
+    setMsg("");
 
-    const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
+    // Ruta de la petición dependiendo de login o registro
+    const endpoint = register ? "/api/localauth/register" : "/api/localauth/login";
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      body: JSON.stringify({ email, password_hash, username }),
-    });
+    // Envía petición a la ruta correspondiente
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ username, email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
 
-    const data = await res.json();
-    setMsg(data.message || data.error);
+      // Obtiene datos de la respuesta
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = { error: "Respuesta no válida del servidor" };
+      }
 
-    if (res.ok && !isRegister) {
-      window.location.href = "/"; // login correcto
+      setMsg(data.message || data.error || "Respuesta desconocida");
+
+      // Si la petición es exitosa y no es registro, redirige a la página de inicio
+      if (res.ok && !register) {
+        window.location.href = "/dashboard"; 
+      }
+    } catch (err) {
+      console.error(err);
+      setMsg("Error de red");
     }
   }
 
+  // Vista de formulario
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4">
-      <h1 className="text-3xl font-bold">KnowTheSpace</h1>
-    <div style={{ padding: 40 }}>
-      <h3>Iniciar Sesión</h3>
+    <div className="p-6 max-w-md mx-auto">
+      <h2 className="text-2xl mb-4">
+        {register ? "Crear cuenta" : "Iniciar sesión"}
+      </h2>
 
-      {/* BOTÓN GOOGLE */}
-      {/* <GoogleSignInButton /> */}
+      <GoogleSignInButton />
 
-      <hr style={{ margin: "20px 0" }} />
+      <hr className="my-4" />
 
-      {/* BOTÓN EMAIL */}
-      <button onClick={() => setIsRegister(false)}>Iniciar con Email</button>
-      <button onClick={() => setIsRegister(true)}>Crear cuenta</button>
-
-      <form onSubmit={handleAuth} style={{ marginTop: 20 }}>
-        {isRegister && (
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {register && (
           <input
             type="text"
             placeholder="Nombre"
             value={username}
-            onChange={(e) => setName(e.target.value)}
-            style={{ display: "block", marginBottom: 10 }}
+            onChange={(e) => setUsername(e.target.value)}
+            className="border p-2"
           />
         )}
 
@@ -59,22 +77,30 @@ export default function LoginPage() {
           placeholder="Correo"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ display: "block", marginBottom: 10 }}
+          className="border p-2"
         />
 
         <input
           type="password"
           placeholder="Contraseña"
-          value={password_hash}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ display: "block", marginBottom: 10 }}
+          className="border p-2"
         />
 
-        <button type="submit">{isRegister ? "Crear cuenta" : "Iniciar sesión"}</button>
+        <button className="bg-blue-600 text-white py-2 rounded">
+          {register ? "Crear cuenta" : "Iniciar sesión"}
+        </button>
       </form>
 
-      <p style={{ marginTop: 20 }}>{msg}</p>
+      <button
+        className="mt-4 underline"
+        onClick={() => setRegister(!register)}
+      >
+        {register ? "¿Ya tienes cuenta? Inicia sesión" : "¿Crear cuenta?"}
+      </button>
+
+      <p className="mt-4 text-red-600">{msg}</p>
     </div>
-    </main>
   );
 }
