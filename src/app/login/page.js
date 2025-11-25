@@ -1,7 +1,5 @@
-"use client";
-export const dynamic = "force-dynamic";
-
 // /app/login/page.js
+"use client";
 
 import { useState } from "react";
 import GoogleSignInButton from "../components/GoogleSignInButton";

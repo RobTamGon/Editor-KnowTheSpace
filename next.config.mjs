@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 // Configuración de Next.js
 const nextConfig = {
+  devIndicators: false,
   // Configuración de entorno
   env: {
     // Clave secreta del JWT

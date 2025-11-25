@@ -166,10 +166,10 @@ export default function HomeView({ lang, user }) {
 
         {/* BOTONES CENTRALES */}
         <div className="flex justify-center gap-6 flex-wrap mt-6">
-          <CenterButton text={Dict !== null ? Dict.Home.Search : "..."} href="#" />
+          {/* <CenterButton text={Dict !== null ? Dict.Home.Search : "..."} href="#" /> */}
           <CenterButton text={Dict !== null ? Dict.Home.Editor : "..."}href={"/" + lang + "/editor"} />
-          <CenterButton text={Dict !== null ? Dict.Home.Created_Levels : "..."} href="#" />
-          <CenterButton text={Dict !== null ? Dict.Home.Saved_Levels : "..."} href="#" />
+          {/* <CenterButton text={Dict !== null ? Dict.Home.Created_Levels : "..."} href="#" /> */}
+          {/* <CenterButton text={Dict !== null ? Dict.Home.Saved_Levels : "..."} href="#" /> */}
         </div>
       </main>
 
