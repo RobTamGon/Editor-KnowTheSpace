@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
+// Configuración de Next.js
 const nextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // Configuración de entorno
+  env: {
+    // Clave secreta del JWT
+    JWT_SECRET: process.env.JWT_SECRET,
+  },
 };
 
 export default nextConfig;
