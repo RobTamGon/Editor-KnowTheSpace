@@ -68,7 +68,7 @@ export default function HomeView({ lang, user }) {
 			</div>
 
 			<div>
-				<a className="flex text-center justify-center items-center px-6 w-1/2 h-full translate-x-full border-2" href="#">
+				<a className="flex text-center justify-center items-center px-6 w-1/2 h-full translate-x-full border-2" href={lang === "es" ? "/en" : "/es"}>
 					{Dict !== null ? Dict.Home.Language : "..."}
 				</a>
 			</div>
