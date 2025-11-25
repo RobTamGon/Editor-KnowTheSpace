@@ -69,8 +69,8 @@ export default async function HomePage({ params }) {
               />
             </a>
           </div>
-          <HomeView lang={lang} user={user} />
         </div>
+        <HomeView lang={lang} user={user} />
       </>
     );
 }

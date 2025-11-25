@@ -269,7 +269,7 @@ export default function Editor({ params }) {
 					<div className="md:col-span-5 md:ml-4">
 						<Layout />
 					</div>
-					<div className="md:col-span-3 md:ml-4 shadow-lg z-50 backdrop-blur-md" style={Style}>
+					<div className="md:col-span-3 md:ml-4 shadow-lg backdrop-blur-md" style={Style}>
 						<Menu lang={lang} />
 					</div>
 				</div>
@@ -505,9 +505,6 @@ function Menu({ lang }) {
 		<>
 			<div className="flex justify-center items-center h-full">
 				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
-					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href={"/" + lang}>
-						{_DictionaryContext !== null ? _DictionaryContext.Editor.Back : "..."}
-					</a>
 					<div>
 						<DimensionInputs />
 					</div>
@@ -524,8 +521,8 @@ function Menu({ lang }) {
 					<a className="flex justify-center items-center px-4 py-2 rounded-xl font-semibold border border-[var(--foreground)]/30
           				bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
           				hover:bg-[var(--foreground)] hover:text-[var(--background)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)]
-          				transition-all duration-200 max-md:relative max-md:static max-md:mb-4 md:absolute md:top-4 md:right-4" href="/">
-						Volver
+          				transition-all duration-200 max-md:relative max-md:static max-md:mb-4 md:absolute md:top-4 md:right-4" href={"/" + lang}>
+						{_DictionaryContext !== null ? _DictionaryContext.Editor.Back : "..."}
 					</a>
 				</div>
 			</div>
