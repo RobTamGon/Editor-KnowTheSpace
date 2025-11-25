@@ -110,7 +110,7 @@ export default function HomeView({ lang, user }) {
       >
         {/* Logo izquierda */}
         <div className="flex items-center gap-2">
-					<a href="#">
+					<a href="https://ai-0.itch.io/project-know-the-space-i">
 						<img
 							src="/Logo.png"
 							alt="Know the Space"
