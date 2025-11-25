@@ -1,8 +1,8 @@
 "use client";
 
 
-import { useReducer, createContext, useContext } from "react";
-import ChatAssistant from "../components/chatassistant";
+import { use, useState, useEffect, useReducer, createContext, useContext } from "react";
+import ChatAssistant from "../../components/chatassistant";
 import { useSession } from "next-auth/react";
 
 // Dimension size limits
@@ -26,6 +26,9 @@ const EntityOrder = [
 	{ Path: "/Editor/Entities/Key.png", Name: "Key" }
 ]
 
+
+// Initialize dictionary context
+const DictionaryContext = createContext(null);
 
 // Initialize dimension contexts and default values
 const InitialDimensions = [3, 3];
@@ -230,9 +233,26 @@ function DataReducer(Data, Action) {
 
 
 // Main component
-export default function Editor() {
+export default function Editor({ params }) {
 	const [_Dimensions, _DimensionsDispatch] = useReducer(DimensionsReducer, InitialDimensions);
 	const [_Data, _DataDispatch] = useReducer(DataReducer, InitialData);
+	const { lang } = use(params);
+	const [Dict, setDict] = useState(null);
+	
+	
+	useEffect(() => {
+		async function load() {
+			try {
+			const res = await fetch(`/locales/${lang}/common.json`);
+			const json = await res.json();
+			setDict(json);
+			} catch (err) {
+			console.error("Failed to load language JSON", err);
+			}
+		}
+
+		load();
+	  }, [lang]);
 
 	const Style = {
 		backgroundColor: `var(--middleground)`
@@ -240,6 +260,7 @@ export default function Editor() {
 
 	return (
 		<>
+			<DictionaryContext value={Dict}>
 			<DimensionsContext value={_Dimensions}>
 			<DimensionsDispatchContext value={_DimensionsDispatch}>
 			<DataContext value={_Data}>
@@ -249,14 +270,15 @@ export default function Editor() {
 						<Layout />
 					</div>
 					<div className="md:col-span-3 md:ml-4 shadow-lg z-50 backdrop-blur-md" style={Style}>
-						<Menu />
+						<Menu lang={lang} />
 					</div>
 				</div>
 			</DataDispatchContext>
 			</DataContext>
 			</DimensionsDispatchContext>
 			</DimensionsContext>
-			<ChatAssistant />
+			</DictionaryContext>
+			<ChatAssistant Dict={Dict}/>
 		</>
 	);
 }
@@ -471,7 +493,10 @@ function Connection({ Data, Position, Orientation }) {
 
 
 // UI with all menus
-function Menu() {
+function Menu({ lang }) {
+	const _DictionaryContext = useContext(DictionaryContext);
+
+
 	
 	const { data: local_session } = useSession();
 	// console.log("SESSION:", local_session);
@@ -480,6 +505,9 @@ function Menu() {
 		<>
 			<div className="flex justify-center items-center h-full">
 				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
+					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href={"/" + lang}>
+						{_DictionaryContext !== null ? _DictionaryContext.Editor.Back : "..."}
+					</a>
 					<div>
 						<DimensionInputs />
 					</div>
@@ -489,9 +517,8 @@ function Menu() {
     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
     					hover:bg-[var(--foreground)] hover:text-[var(--background)]
     					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"> 
-						Subir nivel</button>
+						{_DictionaryContext !== null ? _DictionaryContext.Editor.Upload : "..."}{_DictionaryContext !== null ? _DictionaryContext.Editor.Upload : "..."}</button>
 						)}
-
 						<DownloadButton />
 					</div>
 					<a className="flex justify-center items-center px-4 py-2 rounded-xl font-semibold border border-[var(--foreground)]/30
@@ -509,6 +536,7 @@ function Menu() {
 
 // Dimension controls
 function DimensionInputs() {
+	const _DictionaryContext = useContext(DictionaryContext);
 	const _Dimensions = useContext(DimensionsContext);
 	const _DimensionsDispatch = useContext(DimensionsDispatchContext);
 	const _DataDispatch = useContext(DataDispatchContext);
@@ -551,7 +579,7 @@ function DimensionInputs() {
 		<>
 			<div className="col-span-6">
 				<div className="grid grid-cols-9 grid-rows-2 gap-1">
-					<p className="col-span-4 md:col-span-4 text-center">Ancho:</p>
+					<p className="col-span-4 md:col-span-4 text-center">{_DictionaryContext !== null ? _DictionaryContext.Editor.Width : "..."}</p>
 					<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 						<button onClick={DecreaseWidth} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
@@ -564,7 +592,7 @@ function DimensionInputs() {
     					hover:bg-[var(--foreground)] hover:text-[var(--background)]
     					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer">+</button>
 					</div>
-					<p className="col-span-4 md:col-span-4 text-center">Alto:</p>
+					<p className="col-span-4 md:col-span-4 text-center">{_DictionaryContext !== null ? _DictionaryContext.Editor.Height : "..."}</p>
 					<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 						<button onClick={DecreaseHeight} className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
@@ -587,6 +615,7 @@ function DimensionInputs() {
 // Download button
 function DownloadButton() {
 	const _Data = useContext(DataContext);
+	const _DictionaryContext = useContext(DictionaryContext);
 
 
 	function HandleClick() {
@@ -610,7 +639,7 @@ function DownloadButton() {
     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
     					hover:bg-[var(--foreground)] hover:text-[var(--background)]
     					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"
-						onClick={HandleClick}>Descargar nivel</button>
+						onClick={HandleClick}>{_DictionaryContext !== null ? _DictionaryContext.Editor.Download : "..."}</button>
 		</>
 	);
 }

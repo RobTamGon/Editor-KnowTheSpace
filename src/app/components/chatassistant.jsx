@@ -3,7 +3,7 @@ import { useState } from "react";
 import FloatingChatWidget from "./FloatingChatWidget";
 
 // Componente para el asistente de niveles
-export default function ChatAssistant() {
+export default function ChatAssistant({ Dict }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -39,6 +39,7 @@ export default function ChatAssistant() {
         input={input}
         setInput={setInput}
         sendMessage={sendMessage}
+        Dict={Dict}
       />
     </div>
     

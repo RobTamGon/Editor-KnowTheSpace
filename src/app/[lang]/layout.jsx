@@ -1,6 +1,6 @@
 // app/layout.tsx
-import "./globals.css"
-import { Providers } from "../providers.jsx"
+import "./../globals.css"
+import { Providers } from "../../providers.jsx"
 
 // Metadata del sitio
 export const metadata = {

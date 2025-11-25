@@ -41,19 +41,36 @@
 //   );
 // }
 // /app/home/page.js
-import { getUserFromCookie } from "../lib/getUser";
-import Home from "./home/page";
+import { cookies } from "next/headers";
+import { getUserFromCookie } from "../../lib/getUser";
+import HomeView from "./HomeView";
 
-export default function HomePage() {
-  // const user = getUserFromCookie(); 
+export default async function HomePage({ params }) {
+  // Obtiene el cookie local_session y el usuario asociado
+  const cookieStore = await cookies();
+  const user = getUserFromCookie(cookieStore);
+  const { lang } = await params;
+
 
   // const NavBar_Style = {
   //   backgroundColor: `var(--middleground)`
   // };
 
   return (
-    <>
-      <Home />
-    </>
-  );
+      <>
+        <div className="absolute w-full h-16 grid grid-cols-8 grid-row-1" style={NavBar_Style}>
+          <div className="size-16 cursor-pointer">
+            <a href="#">
+              <img
+                src="/Logo.png"
+                alt="Know the Space"
+                width={64}
+                height={64}
+              />
+            </a>
+          </div>
+          <HomeView lang={lang} user={user} />
+        </div>
+      </>
+    );
 }
