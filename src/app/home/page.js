@@ -140,10 +140,10 @@ export default async function Home() {
 
         {/* BOTONES CENTRALES */}
         <div className="flex justify-center gap-6 flex-wrap mt-6">
-          <CenterButton text="Buscar niveles" href="#" />
+          {/* <CenterButton text="Buscar niveles" href="#" /> */}
           <CenterButton text="Editor" href="/editor" />
-          <CenterButton text="Niveles creados" href="#" />
-          <CenterButton text="Niveles guardados" href="#" />
+          {/* <CenterButton text="Niveles creados" href="#" />
+          <CenterButton text="Niveles guardados" href="#" /> */}
         </div>
       </main>
 

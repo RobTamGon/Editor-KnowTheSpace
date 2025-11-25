@@ -10,7 +10,7 @@ export default function FloatingChatWidget({ messages, input, setInput, sendMess
       {/* Floating Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-xl transition-all"
+        className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-xl transition-all font-bold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-600/40"
       >
         💬
       </button>
@@ -19,9 +19,9 @@ export default function FloatingChatWidget({ messages, input, setInput, sendMess
       {open && (
         <div className="fixed bottom-20 right-6 w-80 h-96 bg-white border shadow-xl rounded-lg flex flex-col animate-fade-in">
           {/* Header */}
-          <div className="p-3 bg-blue-600 text-white font-bold flex justify-between">
+          <div className="p-3 bg-blue-600 text-white font-bold flex justify-between items-center">
             Asistente de Editor de Niveles KnowTheSpace
-            <button onClick={() => setOpen(false)}>✖</button>
+            <button className="text-white font-bold hover:text-gray-200 transition-colors" onClick={() => setOpen(false)}>✖</button>
           </div>
 
           {/* Messages */}
@@ -50,7 +50,7 @@ export default function FloatingChatWidget({ messages, input, setInput, sendMess
             />
             <button
               onClick={sendMessage}
-              className="bg-blue-600 text-white px-4 rounded-r"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-r transition-colors shadow-md"
             >
               ➤
             </button>

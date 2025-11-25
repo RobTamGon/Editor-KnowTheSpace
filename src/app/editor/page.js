@@ -249,7 +249,7 @@ export default function Editor() {
 					<div className="md:col-span-5 md:ml-4">
 						<Layout />
 					</div>
-					<div className="md:col-span-3 md:ml-4 shadow-lg z-50 backdrop-blur-md" style={Style}>
+					<div className="md:col-span-3 md:ml-4 shadow-lg backdrop-blur-md" style={Style}>
 						<Menu />
 					</div>
 				</div>
