@@ -42,7 +42,7 @@ export default function LoginPage() {
 
       // Si la petición es exitosa y no es registro, redirige a la página de inicio
       if (res.ok && !register) {
-        window.location.href = "/dashboard"; 
+        window.location.href = "/home"; 
       }
     } catch (err) {
       console.error(err);

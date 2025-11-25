@@ -2,6 +2,7 @@
 
 
 import { useReducer, createContext, useContext } from "react";
+import ChatAssistant from "../components/chatassistant";
 
 
 // Dimension size limits
@@ -256,6 +257,7 @@ export default function Editor() {
 			</DataContext>
 			</DimensionsDispatchContext>
 			</DimensionsContext>
+			<ChatAssistant />
 		</>
 	);
 }

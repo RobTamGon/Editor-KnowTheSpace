@@ -6,13 +6,13 @@ export function middleware(req) {
   const url = req.nextUrl.clone();
 
   // Proteger rutas que empiezan por /dashboard
-  if (url.pathname.startsWith("/dashboard")) {
+  if (url.pathname.startsWith("/home")) {
     // Obtiene el token del cookie local_session
     const token = req.cookies.get("local_session")?.value; 
 
     // Si no hay token redirige a login
     if (!token) {
-      url.pathname = "/login";
+      url.pathname = "/";
       return NextResponse.redirect(url);
     }
 
@@ -24,6 +24,6 @@ export function middleware(req) {
 
 // Configuración de middleware
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/home/:path*"],
 };
 
