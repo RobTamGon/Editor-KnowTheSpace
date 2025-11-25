@@ -555,9 +555,27 @@ function DimensionInputs() {
 
 // Download button
 function DownloadButton() {
+	const _Data = useContext(DataContext);
+
+
+	function HandleClick() {
+		const _JSON = JSON.stringify(_Data, null, 4);
+		const _BLOB = new Blob([_JSON], { type: "application/json" });
+		const _URL = URL.createObjectURL(_BLOB);
+
+		const a = document.createElement("a");
+		a.href = _URL;
+		a.download = "Level.json";
+		document.body.appendChild(a);
+		a.click()
+		document.body.removeChild(a);
+		URL.revokeObjectURL(_URL);
+	}
+
+
 	return (
 		<>
-			<button className="py-4 border cursor-pointer">Descargar nivel</button>
+			<button className="py-4 border cursor-pointer" onClick={HandleClick}>Descargar nivel</button>
 		</>
 	);
 }
