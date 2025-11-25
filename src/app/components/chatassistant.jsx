@@ -3,7 +3,7 @@ import { useState } from "react";
 import FloatingChatWidget from "./FloatingChatWidget";
 
 // Componente para el asistente de niveles
-export default function ChatAssistant({ Dict }) {
+export default function ChatAssistant({ Data, Dict }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -20,7 +20,7 @@ export default function ChatAssistant({ Dict }) {
     // Envia el mensaje al servidor
     const response = await fetch("/api/ai/editorassistant", {
       method: "POST",
-      body: JSON.stringify({ message: input }),
+      body: JSON.stringify({ message: input + "\n\nJSON del nivel: " + JSON.stringify(Data) }),
     });
 
     // Obtiene la respuesta del servidor

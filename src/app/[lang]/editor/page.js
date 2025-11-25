@@ -243,11 +243,11 @@ export default function Editor({ params }) {
 	useEffect(() => {
 		async function load() {
 			try {
-			const res = await fetch(`/locales/${lang}/common.json`);
-			const json = await res.json();
-			setDict(json);
-			} catch (err) {
-			console.error("Failed to load language JSON", err);
+				const res = await fetch(`/locales/${lang}/common.json`);
+				const json = await res.json();
+				setDict(json);
+			} catch (Error) {
+				console.error("Failed to load language JSON", Error);
 			}
 		}
 
@@ -278,7 +278,9 @@ export default function Editor({ params }) {
 			</DimensionsDispatchContext>
 			</DimensionsContext>
 			</DictionaryContext>
-			<ChatAssistant Dict={Dict}/>
+			<div className="absolute bottom-12">
+				<ChatAssistant Data={_Data} Dict={Dict}/>
+			</div>
 		</>
 	);
 }

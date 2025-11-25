@@ -4,7 +4,7 @@ import { Providers } from "../../providers.jsx"
 
 // Metadata del sitio
 export const metadata = {
-  title: "KnowTheSpace",
+  title: "Know the Space",
   description: "Game Website",
 }
 
