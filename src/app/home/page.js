@@ -94,15 +94,24 @@ export default async function Home() {
         style={{ backgroundColor: "var(--middleground)" }}
       >
         {/* Logo izquierda */}
-        <a href="#" className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <img
             src="/Logo.png"
             alt="Know the Space"
             width={56}
             height={56}
-            className="hover:scale-105 transition-transform"
+            className="hover:scale-105 transition-transform cursor-pointer"
           />
-        </a>
+          <a href="https://ai-0.itch.io/project-know-the-space-i">
+            <img
+              src="/QR Itch.png"
+              alt="Know the Space"
+              width={56}
+              height={56}
+              className="hover:scale-105 transition-transform cursor-pointer"
+            />
+          </a>
+        </div>
 
         {/* Lado derecho */}
         <div className="flex gap-4 items-center">
