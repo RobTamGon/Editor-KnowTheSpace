@@ -29,8 +29,8 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx", 
+    "src/app/api/levels/upload"  ],
   "exclude": [
     "node_modules"
   ]

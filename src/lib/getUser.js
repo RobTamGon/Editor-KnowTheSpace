@@ -3,6 +3,16 @@ import jwt from "jsonwebtoken";
 
 // Función para obtener el usuario asociado al cookie local_session 
 export function getUserFromCookie(cookieStore) {
+  // // ejemplo: guardas un JSON stringify del usuario en cookie 'user'
+  // const userCookie = cookieStore.get?.("user")?.value;
+  // if (!userCookie) return null;
+
+  // try {
+  //   return JSON.parse(userCookie);
+  // } catch {
+  //   return null;
+  // }
+  
   try {
     if (!cookieStore) return null;
 

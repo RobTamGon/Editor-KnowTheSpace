@@ -3,7 +3,7 @@
 
 import { useReducer, createContext, useContext } from "react";
 import ChatAssistant from "../components/chatassistant";
-import { useSession } from "next-auth/react";
+
 
 // Dimension size limits
 const Min_Dimension_Size = 1;
@@ -237,6 +237,7 @@ export default function Editor() {
 	const Style = {
 		backgroundColor: `var(--middleground)`
 	};
+
 
 	return (
 		<>
@@ -472,10 +473,6 @@ function Connection({ Data, Position, Orientation }) {
 
 // UI with all menus
 function Menu() {
-	
-	const { data: local_session } = useSession();
-	// console.log("SESSION:", local_session);
-
 	return (
 		<>
 			<div className="flex justify-center items-center h-full">
@@ -484,14 +481,12 @@ function Menu() {
 						<DimensionInputs />
 					</div>
 					<div className="grid md:grid-cols-1 md:grid-rows-2 gap-4 max-md:grid-cols-2 max-md:grid-rows-1">
-						{(local_session||null) && (
-						<button className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+						{/* <button className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
     					hover:bg-[var(--foreground)] hover:text-[var(--background)]
     					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"> 
-						Subir nivel</button>
-						)}
-
+						Subir nivel</button> */}
+						{/* <UploadButton /> */}
 						<DownloadButton />
 					</div>
 					<a className="flex justify-center items-center px-4 py-2 rounded-xl font-semibold border border-[var(--foreground)]/30
@@ -614,3 +609,82 @@ function DownloadButton() {
 		</>
 	);
 }
+
+// Upload button
+// function UploadButton() {
+// 	const _Data = useContext(DataContext);
+// 	const _JSON = JSON.stringify(_Data, null, 4);
+
+// 	async function HandleOnClick() {
+// 	  try {
+// 	    const res = await fetch("/api/levels/upload", {
+// 	      method: "POST",
+// 	      headers: { "Content-Type": "application/json" },
+// 	      body: JSON.stringify({
+// 	        dataJSON: JSON.parse(JSON.stringify(_Data))  // ENVÍAS EL OBJETO NORMAL, no el string
+// 	      })
+// 	    });
+	
+// 	    const data = await res.json();
+	
+// 	    if (!res.ok) {
+// 	      alert(data.error || "Error al subir nivel");
+// 	      return;
+// 	    }
+	
+// 	    alert("Nivel subido correctamente");
+	
+// 	  } catch (err) {
+// 	    console.error(err);
+// 	    alert("Error de conexión");
+// 	  }
+// 	}
+	
+// 	return (
+// 		<>
+// 			<button className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+//     					bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+//     					hover:bg-[var(--foreground)] hover:text-[var(--background)]
+//     					hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"
+// 						onClick={HandleOnClick}>Subir nivel</button>
+// 		</>
+// 	);
+// }
+// function UploadButton() {
+//   const _Data = useContext(DataContext);
+
+//   async function HandleOnClick() {
+//     try {
+//       const res = await fetch("/api/levels/upload", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ dataJSON: _Data }) // 🔹 enviar objeto directamente
+//       });
+
+//       const data = await res.json();
+
+//       if (!res.ok) {
+//         alert(data.error || "Error al subir nivel");
+//         return;
+//       }
+
+//       alert("Nivel subido correctamente");
+
+//     } catch (err) {
+//       console.error(err);
+//       alert("Error de conexión");
+//     }
+//   }
+
+//   return (
+//     <button
+//       className="py-4 rounded-xl font-semibold border border-[var(--foreground)]/30
+//         bg-[var(--foreground)]/10 text-[var(--foreground)] shadow-[0_2px_6px_rgba(0,0,0,0.15)]
+//         hover:bg-[var(--foreground)] hover:text-[var(--background)]
+//         hover:shadow-[0_4px_12px_rgba(0,0,0,0.25)] transition-all duration-200 cursor-pointer"
+//       onClick={HandleOnClick}
+//     >
+//       Subir nivel
+//     </button>
+//   );
+// }
