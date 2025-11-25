@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { getUserFromCookie } from "../../lib/getUser";
 import LogoutButton from "../components/dash";
+import ChatAssistant from "../components/chatassistant";
 
 // Página de inicio del dashboard
 export default async function DashboardPage() {
@@ -20,6 +21,7 @@ export default async function DashboardPage() {
           <p>No estás autenticado</p>
         )}
         <hr className="my-4" />
+        <ChatAssistant />
         <LogoutButton />
       </div>
     </nav>
