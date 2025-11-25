@@ -52,9 +52,9 @@ export default async function HomePage({ params }) {
   const { lang } = await params;
 
 
-  // const NavBar_Style = {
-  //   backgroundColor: `var(--middleground)`
-  // };
+  const NavBar_Style = {
+    backgroundColor: `var(--middleground)`
+  };
 
   return (
       <>
