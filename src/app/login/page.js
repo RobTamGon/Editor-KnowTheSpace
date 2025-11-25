@@ -1,3 +1,5 @@
+export const dynamic = "force-no-store";
+
 // /app/login/page.js
 "use client";
 
