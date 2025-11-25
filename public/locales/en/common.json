@@ -1,0 +1,32 @@
+{
+	"Home": {
+		"Title": "Welcome to Know the Space",
+		"Subtitle": "Explore, create and share levels with the community.",
+		
+		"Search": "Search levels",
+		"Editor": "Editor",
+		"Created_Levels": "Created levels",
+		"Saved_Levels": "Saved levels",
+
+		"Login": "Login",
+		"Language": "Language: English",
+
+		"Footer": "All rights reserved."
+	},
+
+	"Editor": {
+		"Back": "Go back",
+
+		"Width": "Width",
+		"Height": "Height",
+
+		"Upload": "Upload level",
+		"Download": "Download level",
+
+
+		"AI": {
+			"Name": "Know the Space's Level Editor Assistant",
+			"Placeholder": "Describe what you want the AI to analyze in your level..."
+		}
+	}
+}

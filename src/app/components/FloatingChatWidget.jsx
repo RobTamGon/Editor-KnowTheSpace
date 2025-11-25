@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function FloatingChatWidget({ messages, input, setInput, sendMessage }) {
+export default function FloatingChatWidget({ messages, input, setInput, sendMessage, Dict }) {
   const [open, setOpen] = useState(false);
+
 
   return (
     <>
@@ -20,7 +21,7 @@ export default function FloatingChatWidget({ messages, input, setInput, sendMess
         <div className="fixed bottom-20 right-6 w-80 h-96 bg-white border shadow-xl rounded-lg flex flex-col animate-fade-in">
           {/* Header */}
           <div className="p-3 bg-blue-600 text-white font-bold flex justify-between">
-            Asistente de Editor de Niveles KnowTheSpace
+            {Dict !== null ? Dict.Editor.AI.Name : "..."}
             <button onClick={() => setOpen(false)}>✖</button>
           </div>
 
@@ -43,9 +44,10 @@ export default function FloatingChatWidget({ messages, input, setInput, sendMess
           {/* Input */}
           <div className="flex p-2 border-t bg-white">
             <input
+              key={Dict !== null ? Dict.Editor.AI.Placeholder : "..."}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Describe el nivel que quieres crear o que duda tienes..."
+              placeholder={Dict !== null ? Dict.Editor.AI.Placeholder : "..."}
               className="flex-1 border p-2 rounded-l"
             />
             <button

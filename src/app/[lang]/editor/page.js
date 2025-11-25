@@ -1,8 +1,8 @@
 "use client";
 
 
-import { useReducer, createContext, useContext } from "react";
-import ChatAssistant from "../components/chatassistant";
+import { use, useState, useEffect, useReducer, createContext, useContext } from "react";
+import ChatAssistant from "../../components/chatassistant";
 
 
 // Dimension size limits
@@ -26,6 +26,9 @@ const EntityOrder = [
 	{ Path: "/Editor/Entities/Key.png", Name: "Key" }
 ]
 
+
+// Initialize dictionary context
+const DictionaryContext = createContext(null);
 
 // Initialize dimension contexts and default values
 const InitialDimensions = [3, 3];
@@ -230,9 +233,26 @@ function DataReducer(Data, Action) {
 
 
 // Main component
-export default function Editor() {
+export default function Editor({ params }) {
 	const [_Dimensions, _DimensionsDispatch] = useReducer(DimensionsReducer, InitialDimensions);
 	const [_Data, _DataDispatch] = useReducer(DataReducer, InitialData);
+	const { lang } = use(params);
+	const [Dict, setDict] = useState(null);
+	
+	
+	useEffect(() => {
+		async function load() {
+			try {
+			const res = await fetch(`/locales/${lang}/common.json`);
+			const json = await res.json();
+			setDict(json);
+			} catch (err) {
+			console.error("Failed to load language JSON", err);
+			}
+		}
+
+		load();
+	  }, [lang]);
 
 	const Style = {
 		backgroundColor: `var(--middleground)`
@@ -241,6 +261,7 @@ export default function Editor() {
 
 	return (
 		<>
+			<DictionaryContext value={Dict}>
 			<DimensionsContext value={_Dimensions}>
 			<DimensionsDispatchContext value={_DimensionsDispatch}>
 			<DataContext value={_Data}>
@@ -257,7 +278,8 @@ export default function Editor() {
 			</DataContext>
 			</DimensionsDispatchContext>
 			</DimensionsContext>
-			<ChatAssistant />
+			</DictionaryContext>
+			<ChatAssistant Dict={Dict}/>
 		</>
 	);
 }
@@ -473,18 +495,21 @@ function Connection({ Data, Position, Orientation }) {
 
 // UI with all menus
 function Menu() {
+	const _DictionaryContext = useContext(DictionaryContext);
+
+
 	return (
 		<>
 			<div className="flex justify-center items-center h-full">
 				<div className="grid grid-cols-1 grid-rows-2 p-4 gap-8 w-full max-md:h-full max-md:relative">
 					<a className="absolute top-4 md:right-4 max-md:left-4 p-2 border" href="/">
-						Volver
+						{_DictionaryContext !== null ? _DictionaryContext.Editor.Back : "..."}
 					</a>
 					<div>
 						<DimensionInputs />
 					</div>
 					<div className="grid md:grid-cols-1 md:grid-rows-2 gap-4 max-md:grid-cols-2 max-md:grid-rows-1">
-						<button className="py-4 border cursor-pointer">Login</button>
+						<button className="py-4 border cursor-pointer">{_DictionaryContext !== null ? _DictionaryContext.Editor.Upload : "..."}</button>
 						<DownloadButton />
 					</div>
 				</div>
@@ -496,6 +521,7 @@ function Menu() {
 
 // Dimension controls
 function DimensionInputs() {
+	const _DictionaryContext = useContext(DictionaryContext);
 	const _Dimensions = useContext(DimensionsContext);
 	const _DimensionsDispatch = useContext(DimensionsDispatchContext);
 	const _DataDispatch = useContext(DataDispatchContext);
@@ -537,13 +563,13 @@ function DimensionInputs() {
 	return (
 		<>
 			<div className="grid grid-cols-9 grid-rows-2 gap-1">
-				<p className="col-span-4 md:col-span-4 text-center">Ancho:</p>
+				<p className="col-span-4 md:col-span-4 text-center">{_DictionaryContext !== null ? _DictionaryContext.Editor.Width : "..."}</p>
 				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 					<button onClick={DecreaseWidth} className="border cursor-pointer">-</button>
 					<p className="col-span-2 border">{_Dimensions[0]}</p>
 					<button onClick={IncreaseWidth} className="border cursor-pointer">+</button>
 				</div>
-				<p className="col-span-4 md:col-span-4 text-center">Alto:</p>
+				<p className="col-span-4 md:col-span-4 text-center">{_DictionaryContext !== null ? _DictionaryContext.Editor.Height : "..."}</p>
 				<div className="col-span-5 grid grid-cols-4 grid-rows-1 text-center">
 					<button onClick={DecreaseHeight} className="border cursor-pointer">-</button>
 					<p className="col-span-2 border">{_Dimensions[1]}</p>
@@ -558,6 +584,7 @@ function DimensionInputs() {
 // Download button
 function DownloadButton() {
 	const _Data = useContext(DataContext);
+	const _DictionaryContext = useContext(DictionaryContext);
 
 
 	function HandleClick() {
@@ -577,7 +604,7 @@ function DownloadButton() {
 
 	return (
 		<>
-			<button className="py-4 border cursor-pointer" onClick={HandleClick}>Descargar nivel</button>
+			<button className="py-4 border cursor-pointer" onClick={HandleClick}>{_DictionaryContext !== null ? _DictionaryContext.Editor.Download : "..."}</button>
 		</>
 	);
 }
