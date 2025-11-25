@@ -26,6 +26,11 @@ body {
 }
 
 
+.pixel-art {
+  image-rendering: pixelated;
+}
+
+
 ::placeholder {
   color: var(--foreground);
   opacity: 1;
