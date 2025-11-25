@@ -17,7 +17,7 @@ export async function POST(req) {
 
   // Insertar usuario en la base de datos
   const { error } = await supabase.from("users").insert({
-    user,
+    user: user,
     email: cleanedEmail,
     password: hashedPassword,
   });

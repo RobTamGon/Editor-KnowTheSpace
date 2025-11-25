@@ -9,7 +9,7 @@ export default function LoginPage() {
   // Estados de formulario
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [user, setUsername] = useState("");
   const [register, setRegister] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -26,7 +26,7 @@ export default function LoginPage() {
       const res = await fetch(endpoint, {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ user, email, password }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
           <input
             type="text"
             placeholder="Nombre"
-            value={username}
+            value={user}
             onChange={(e) => setUsername(e.target.value)}
             className="border p-2"
           />
