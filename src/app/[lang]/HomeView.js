@@ -134,7 +134,7 @@ export default function HomeView({ lang, user }) {
         <div className="flex gap-4 items-center">
 
           {/* Login / Logout */}
-          {user ? (
+          {/* {user ? (
             <LogoutButton />
           ) : (
             <a
@@ -143,7 +143,7 @@ export default function HomeView({ lang, user }) {
             >
               {Dict !== null ? Dict.Home.Login : "..."}
             </a>
-          )}
+          )} */}
 
           {/* Idioma */}
           <a
